@@ -39,7 +39,7 @@ import com.util.DateUtil;
  * <li>DELETE /user/id 删除用户</li>
  * <ul>
  */
-@RequestMapping("/sys")
+@RequestMapping("/")
 @Controller
 public class UserController {
 	

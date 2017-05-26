@@ -71,4 +71,17 @@
 		<error-code>500</error-code>
 		<location>/error/serverError.jsp</location>
 	</error-page>
+	<!-- jsp的配置 -->
+	<jsp-config>
+		<jsp-property-group>
+			<!-- 配置拦截所有的jsp页面 -->
+			<url-pattern>*.jsp</url-pattern>
+			<!-- 可以使用el表达式 -->
+			<el-ignored>false</el-ignored>
+			<!-- 不能在页面使用java脚本 -->
+			<scripting-invalid>true</scripting-invalid>
+			<!-- 给所有的jsp页面导入要依赖的库，common.jsp就是一个全局的标签库文件 
+			<include-prelude>/common/common.jsp</include-prelude> 没用-->
+		</jsp-property-group>
+	</jsp-config>
 </web-app>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:include page="/common/common.jsp"></jsp:include>
+<jsp:include page="/common/common.jsp"></jsp:include> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,7 +30,7 @@
 							name="captcha" style="width: 50%; height: 40px; padding: 12px;"
 							data-options="prompt:'请输入验证码',required:true"> 
 							<img id="verifyImg" title="看不清,换一张" style="width:40%; height:40px;"
-							src="${pageContext.request.contextPath}/sys/verify" border="1"
+							src="${pageContext.request.contextPath}/verify" border="1"
 							align="right">
 					</div>
 					<div>
@@ -46,9 +46,11 @@
 	</body>
 </html>
 <script type="text/javascript">
+	console.log("${sessionScope.user}");
 	/* 如果session中有用户,就跳转到主页  */
-	if("${session_user}" != ""){
-		window.location.href="${path}/bos/main.jspx"
+	if("${sessionScope.user}"){
+		alert("${sessionScope.user}");
+		window.location.href="/toindex";
 	}
 	/* 防止登录页面内嵌在其他页面 */
 	if (window != top){
@@ -62,7 +64,7 @@
 	}).click(function(){
 		/* 由于上面那个事件的返回值也是一个JQuery对象,因此可以采用链式编程,在其后面在绑定一个事件  */
 		/*点击事件,点完后修改验证码,即修改src属性的值  */
-		$(this).attr("src","${pageContext.request.contextPath }/sys/verify" + "?time=" + new Date().getTime())
+		$(this).attr("src","${pageContext.request.contextPath }/verify" + "?time=" + new Date().getTime())
 	});
 	
 	$('#sys_login_loginForm_loginBtn').click(function(){
@@ -114,11 +116,11 @@
 				/*异步提交请求  */
 				//通过serialize()方法把所有表达数据转换格式
 				//如:userId=11122223&password=111111&vcode=1234&key=1
-				$.post('${pageContext.request.contextPath}/sys/login',
+				$.post('${pageContext.request.contextPath}/login',
 						$('#sys_login_loginForm').serialize(),
 						function(r){
 							if(r.success){
-								location.replace('${pageContext.request.contextPath}/sys/toindex');
+								location.replace('${pageContext.request.contextPath}/toindex');
 								return;
 							}else{
 								$.messager.alert('系统消息',r.content,'info');
