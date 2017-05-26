@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+
+	<delete id="delete" parameterType="java.lang.String">
+		delete from user where id in 
+		<foreach item="idItem" collection="array" open="(" separator="," close=")">
+		 	#{idItem}
+		</foreach>
+	</delete>
+	<!-- 建立映射关系 处理字段和属性名不一致问题-->
+	<resultMap id="userMap" type="User">
+		<result property="createTime" column="create_time"/>
+	</resultMap>
+	<select id="getList" parameterType="java.util.Map" resultMap="userMap">
+		select * from user
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="name != null and name != ''">
+				name like concat(concat('%', #{name}), '%')
+			</if>
+			<if test="minCreateDateTime != null">
+				<![CDATA[ and create_time >= #{minCreateDateTime} ]]>
+			</if>
+			<if test="maxCreateDateTime != null">
+				<![CDATA[ and create_time <= #{maxCreateDateTime} ]]>
+			</if>
+		</trim>
+		order by ${sort} ${order} limit #{page}, #{rows}
+	</select>
+	<select id="getTotal" parameterType="java.util.Map" resultType="Integer">
+		select count(*) from user 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="name != null and name != ''">
+				name like concat(concat('%', #{name}), '%')
+			</if>
+			<if test="minCreateTime != null">
+				<![CDATA[ and create_time >= #{minCreateTime} ]]>
+			</if>
+			<if test="maxCreateTime != null">
+				<![CDATA[ and create_time <= #{maxCreateTime} ]]>
+			</if>
+		</trim>
+	</select>
+	
+</mapper>
