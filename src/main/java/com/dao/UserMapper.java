@@ -14,7 +14,7 @@ import com.entity.condition.UserCondition;
 
 public interface UserMapper {
 
-	@Insert("insert into user(name,password) values(#{name},#{password})")
+	@Insert("insert into user(account,password,name,gender,modify_time) values(#{account},#{password},#{name},#{gender},#{modifyTime})")
 	//@Options(useGeneratedKeys = true)
 	public void save(User user);
 	

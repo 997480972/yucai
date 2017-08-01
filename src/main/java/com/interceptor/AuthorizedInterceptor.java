@@ -34,7 +34,8 @@ public class AuthorizedInterceptor implements HandlerInterceptor{
     		}
     		 /** 如果用户没有登录，跳转到登录页面 */
     		request.setAttribute("message", "请先登录再访问网站!");
-    		request.getRequestDispatcher("/login.jsp").forward(request, response);
+    		response.sendRedirect("/login.jsp");
+//    		request.getRequestDispatcher("/login.jsp").forward(request, response);
     		return false;
     	} 
     	return true;

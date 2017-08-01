@@ -6,20 +6,20 @@
 		sys_sysUser_datagrid = $('#sys_sysUser_datagrid').datagrid({
 			title: '用户列表',
 			iconCls: 'icon-man',
-			url: '${pageContext.request.contextPath }/sys/user',
+			url: '${pageContext.request.contextPath }/users',
 			//默认是POST请求方式
 			method: 'get',
-			idField: 'id',
-			fit: true,
-			fitColumns:true,
-			border:false,
-			striped: true,
+			idField: 'id', //指明哪一个字段是标识字段。
+			fit: true,  //面板大小将自适应父容器
+			fitColumns:true, //真正的自动展开,收缩列的大小，以适应网格的宽度，防止水平滚动。
+			border:true,
+			striped: true, //是否显示斑马线效果。
 			/*
 			 * pagination, 显示分页栏
 			 * pageSize, 页记录数, 默认值 10
 			 * pageList, 页记录数选择值, 默认值 [10, 20, 30, 40, 50]
 			 */
-			pagination: true,
+			pagination: true, //如果为true，则在DataGrid控件底部显示分页工具栏
 			//pageSize: 10,
 			//pageList: [10, 20, 30, 40, 50],
 			
@@ -28,10 +28,10 @@
 			 * sortName, 指定排序字段
 			 * sortOrder, 指定升序(asc)或降序(desc), 默认升序.
 			 */
-			sortName: 'account',
+			sortName: 'id',
 			sortOrder: 'asc',
-			checkOnSelect: false,
-			selectOnCheck: true,
+			checkOnSelect: false, //如果为true(默认)，当用户点击行的时候该复选框就会被选中或取消选中。如果为false，当用户仅在点击该复选框的时候才会呗选中或取消
+			selectOnCheck: true, //如果为true(默认)，单击复选框将永远选择行。如果为false，选择行将不选中复选框。
 			columns: [[
 			    /*
 			     * field, 与JavaBean的属性对应
@@ -40,20 +40,21 @@
 			     * formatter, 对列进行格式化
 			     */
 			    {field:'id',title:'编号',width:30,checkbox:true},
-			    {field:'account',title:'账号',width:100,sortable:true},
+			    //{field:'account',title:'账号',width:100,sortable:true},
 			    {field:'name',title:'姓名',width:60,sortable:true},
 			    {field:'gender',title:'性别',width:30,sortable:true,
 			    	formatter: function(value,row,index){
 			    		return value == 'M' ? '男' : '女';
 			    	}},
-			    {field:'birthday',title:'出生日期',width:60,sortable:true},
-			    {field:'email',title:'电子邮箱',width:100},
-			    {field:'create_datetime',title:'创建时间',width:100,sortable:true},
-			    {field:'modify_datetime',title:'最后修改时间',width:100,sortable:true,
+			    //{field:'birthday',title:'出生日期',width:60,sortable:true},
+			    //{field:'email',title:'电子邮箱',width:100},
+			    {field:'createTime',title:'创建时间',width:100,sortable:true},
+			    {field:'modifyTime',title:'最后修改时间',width:100,sortable:true,
 			    	//title提示
-			    	formatter: function(value,row,index){
-			    		return '<span title="'+value+'">'+value+'</span>';
-			    	}},
+			    	//formatter: function(value,row,index){
+			    	//	return '<span title="'+value+'">'+value+'</span>';
+			    	//}
+			    },
 			]],
 			//操作工具栏
 			toolbar: [{
@@ -101,7 +102,7 @@
 		var d = $('<div>').dialog({
 			width: 600,
 			height: 200,
-			href: '${pageContext.request.contextPath }/sys/toAddUser',
+			href: '${pageContext.request.contextPath }/toAddUser',
 			modal: true,
 			title: '添加用户',
 			iconCls: 'icon-edit',
@@ -124,7 +125,7 @@
 						//jQuery方式提交表单
 						$.ajax({
 							type: 'POST',
-							url: '${pageContext.request.contextPath}/sys/user',
+							url: '${pageContext.request.contextPath}/user',
 							data: $('#sys_sysUser_add_dialog_form').serialize(),
 							success: function(data){
 								if(data.success){
@@ -132,7 +133,7 @@
 									//$('#sys_sysUser_datagrid').datagrid('load');
 									//在datagrid的第1行插入新增的数据, 比load 方式少查询一次数据库.
 									$('#sys_sysUser_datagrid').datagrid('insertRow',{
-										index: 0,
+										//index: 0,
 										row: data.object
 									});
 									
@@ -178,7 +179,7 @@
 								title : '系统提示',
 								text : '数据处理中,请稍后......'
 							});
-							$.post('${pageContext.request.contextPath }/sys/user',
+							$.post('${pageContext.request.contextPath }/user',
 								    $('#sys_sysUser_edit_dialog_form').serialize() + '&_method=PUT',
 									function(r){
 										if(r.success){
@@ -217,7 +218,7 @@
 					for(var i = 0; i < rows.length; i++){
 						ids.push(rows[i].id);
 					}
-					$.post('${pageContext.request.contextPath }/sys/user/' + ids.join(','),
+					$.post('${pageContext.request.contextPath }/user/' + ids.join(','),
 							{_method: 'DELETE'},
 							function(data){
 								if(data.success){
@@ -237,10 +238,9 @@
 		}
 	}
 </script>
-<div class="easyui-layout" data-options="fit : true,border : false,collapsed:true">
+<div class="easyui-layout" data-options="fit : true,border : false">
 	<div data-options="region:'north',title:'查询条件',iconCls:'icon-filter',border:false" style="height: 145px;overflow: hidden;">
 		<form id="sys_sysUser_searchForm" method="post">
-			<div align="center">
 			<table class="dialog-table" style="width:95%">
 				<tr>
 					<th>用户名</th>
@@ -260,20 +260,21 @@
 						    <option value="F">女</option>  
 						</select>
 					</td>
+					<!-- 
 					<th>最后修改间</th>
 					<td>
 						<input class="easyui-datetimebox" name="minModifyDateTime" data-options="height:24,width:160,editable:false"/>
 						<input class="easyui-datetimebox" name="maxModifyDateTime" data-options="height:24,width:160,editable:false"/>
 					</td>
+					 -->
 				</tr>
 				<tr>
-					<td colspan="4" align="center">
-						<a id="sys_sysUser_datagrid_searchBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true"> 查 询 </a>&nbsp;&nbsp;  
+					<td colspan="3" align="center">
+						<a id="sys_sysUser_datagrid_searchBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"> 查 询 </a>&nbsp;&nbsp;  
 						<a id="sys_sysUser_datagrid_clearBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true"> 清 空 </a> 
 					</td>
 				</tr>
 			</table>
-			</div>
 		</form>
 	</div>
 	<div data-options="region:'center',border:false">

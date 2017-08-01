@@ -18,6 +18,9 @@
 			<if test="name != null and name != ''">
 				name like concat(concat('%', #{name}), '%')
 			</if>
+			<if test="gender != null and gender != ''">
+				gender = #{gender}
+			</if>
 			<if test="minCreateDateTime != null">
 				<![CDATA[ and create_time >= #{minCreateDateTime} ]]>
 			</if>

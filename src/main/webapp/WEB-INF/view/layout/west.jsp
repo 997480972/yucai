@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	$(function(){
 		$('#layout_west_menu_tree').tree({
-			url: '${pageContext.request.contextPath }/sys/menus',
+			url: '${pageContext.request.contextPath }/menus',
 			parentField: 'pid',
 			onLoadSuccess: function(){
 				//折叠菜单

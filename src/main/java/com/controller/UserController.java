@@ -159,12 +159,12 @@ public class UserController {
 		
 		List<SysMenu> menus = new ArrayList<>();
 		List<SysMenu> sysMenus = sysMenuService.getSysMenus();
-		for(SysMenu sysMenu : sysMenus){
-			SysMenu menu = new SysMenu();
-			BeanUtils.copyProperties(sysMenu, menu);
-			menus.add(menu);
-		}
-		return menus;
+//		for(SysMenu sysMenu : sysMenus){
+//			SysMenu menu = new SysMenu();
+//			BeanUtils.copyProperties(sysMenu, menu);
+//			menus.add(menu);
+//		}
+		return sysMenus;
 	}
 	
 	@RequestMapping(value="/user/{id}", method=RequestMethod.GET)
@@ -179,7 +179,7 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/user", method=RequestMethod.GET)
+	@RequestMapping(value="/users", method=RequestMethod.GET)
 	public DataGrid<User> getSysUsers(UserCondition userCondition, Page page){
 		logger.info("查询系统用户..." + userCondition);
 		
@@ -209,7 +209,7 @@ public class UserController {
 		json.setSuccess(true);
 		json.setContent("添加用户成功!");
 		user.setId(key);
-		user.setModifyTime(DateUtil.getCurrentDate("yyyy-MM-dd hh:mm:ss"));
+//		user.setModifyTime(DateUtil.getCurrentDate("yyyy-MM-dd hh:mm:ss"));
 		json.setObject(user);
 		
 		return json;

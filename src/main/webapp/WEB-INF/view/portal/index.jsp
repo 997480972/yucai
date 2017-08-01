@@ -36,10 +36,12 @@
 		portal = $('#portal').portal({
 			border : false,
 			fit : true,
+			//在用户拖拽面板的时候触发
 			onStateChange : function() {
+				//创建一个cookie并设置 
 				$.cookie('portal-state', getPortalState(), {
-					path: '/',
-					expires : 7
+					path: '/',   //cookie的有效路径
+					expires : 7  //设置有效时间为 7天
 				});
 			}
 		});

@@ -12,10 +12,10 @@ package com.entity.page;
  */
 public class Page {
 
-	private int page;
-	private int rows;
-	private String sort;
-	private String order;
+	private int page = 1;
+	private int rows = 10;
+	private String sort = "id";
+	private String order = "asc";
 	
 	public int getPage() {
 		//

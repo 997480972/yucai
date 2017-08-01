@@ -3,10 +3,12 @@ package com.entity;
 
 public class User {
 	private Integer id;
-	private String name;
-	private String password;
-	private String createTime;
-	private String modifyTime;
+	private String account; //帐号
+	private String password; //密码
+	private String name; //名字
+	private String gender; //性别   M：男，F：女
+	private String createTime; //创建时间
+	private String modifyTime; //最后修改时间
 	
 	public Integer getId() {
 		return id;
@@ -14,17 +16,29 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getAccount() {
+		return account;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	public String getCreateTime() {
 		return createTime;
@@ -40,7 +54,8 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password
+		return "User [id=" + id + ", account=" + account + ", password="
+				+ password + ", name=" + name + ", gender=" + gender
 				+ ", createTime=" + createTime + ", modifyTime=" + modifyTime
 				+ "]";
 	}

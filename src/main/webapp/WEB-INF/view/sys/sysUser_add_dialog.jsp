@@ -19,12 +19,14 @@
 					</select>
 				</td>
 			</tr>
+			<!-- 
 			<tr>
 				<th>电子邮箱</th>
 				<td><input class="easyui-textbox" name="email" data-options="height:24,width:160, required:true,validType:'email'"/></td>
 				<th>出生日期</th>
 				<td><input class="easyui-datebox" name="birthday" data-options="height:24,width:160, required:true,editable:false"/></td>
 			</tr>
+			 -->
 		</table>
 	</form>
 </div>
